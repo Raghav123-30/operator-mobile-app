@@ -1,11 +1,18 @@
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { TouchableOpacity, FlatList, ScrollView } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
-import { useRouter } from "expo-router";
+import { useRouter, Href, Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+interface service {
+  id: number;
+  name: string;
+  route: string;
+  iconName: keyof typeof MaterialCommunityIcons.glyphMap;
+}
 const Home = () => {
   const router = useRouter();
-  const services = [
+  const services: service[] = [
     {
       id: 1,
       name: "New Booking",
@@ -33,7 +40,14 @@ const Home = () => {
     { id: 5, name: "Settings", route: "Settings", iconName: "hammer" },
   ];
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingBottom: 30,
+      }}
+    >
       <FlatList
         data={services}
         key={"id"}
@@ -41,30 +55,24 @@ const Home = () => {
           alignSelf: "center",
           paddingVertical: 50,
           rowGap: 8,
+          paddingHorizontal: 16,
         }}
         columnWrapperStyle={{ gap: 8, justifyContent: "center" }}
         numColumns={2}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
-              router.push(`/${item.route}`);
+              router.push(item.route as Href<"">);
             }}
-            style={{
-              width: 200,
-              height: 200,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#836FFF",
-              borderRadius: 8,
-              gap: 8,
-            }}
+            className="bg-violet-700 rounded-xl shadow-lg flex flex-col items-center justify-center space-y-5 "
+            style={{ width: 180, height: 180 }}
           >
             <MaterialCommunityIcons
               name={item.iconName}
               size={50}
               color={"white"}
             />
-            <Text style={{ color: "white" }}>{item.name}</Text>
+            <Text className="text-white  text-lg">{item.name}</Text>
           </TouchableOpacity>
         )}
       ></FlatList>

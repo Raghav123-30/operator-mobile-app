@@ -49,10 +49,13 @@ function RootLayoutNav() {
   const router = useRouter();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DefaultTheme}>
       <Stack
         screenOptions={{
           headerTitle: "",
+          headerStyle: {
+            backgroundColor: "#7c3aed",
+          },
           headerLeft: () => {
             return (
               <TouchableOpacity
